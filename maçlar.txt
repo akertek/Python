@@ -1,0 +1,8 @@
+    Real_Betis 1-2 Barcelona
+    Barcelona 2-1 Real_Madrid
+Real_Madrid 2-0 Valencia
+  Barcelona 1-0 Valencia
+ 
+Atletico_Madrid 1-0 Barcelona
+Valencia 1-1 Atletico_Madrid
+Atletico_Madrid 1-2 Real_Madrid
