@@ -38,4 +38,4 @@ def tc_kimlik_sorgula(kimlik_no):
     else:
         return True
 
-is_correct = tc_kimlik_sorgula('29308128070')
+is_correct = tc_kimlik_sorgula('11111111111')
