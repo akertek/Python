@@ -1,0 +1,259 @@
+x"""
+1 ndarray'in tek 1 tipi olabiliyor.
+Matlab
+DataFrame
+
+data manipulation, data wrangling
+"""
+
+#%% import
+import numpy as np
+import pandas as pd
+
+
+# %% series nedir?
+# - bir kolon ya da bir satır
+
+ser1 = pd.Series([1, 2, np.nan, 4])
+# <class 'pandas.core.series.Series'>
+
+# print(type(ser1))
+# print(ser1)
+
+
+
+# %% series index
+ser2 = pd.Series([4, 5, 6], index=["four", "five", "six"])
+ser2_item = ser2["five"]
+# ser2_item = ser2["fiveXX"]  # hata
+ser2_items = ser2["four":"five"]
+
+
+#%% reset index
+ser2 = pd.Series([4, 5, 6], index=["four", "five", "six"])
+ser2.reset_index(drop=True, inplace=True)
+# ser2 = ser2.reset_index(drop=True)
+
+
+
+# %% bir dict kullanarak, DataFrame yaratmak
+dict1 = {}
+dict1["film_adi"] = ["batman begins", "the dark knight", "the dark knight rises", "aquaman", "the terminator"]
+dict1["yil"] = [2005, 2008, 2012, 2018, 1984]
+dict1["genre"] = ["action", "action", "action", "action", "sci-fi"]
+df1 = pd.DataFrame(dict1)
+
+# wrapper
+# opencv (c/c++)
+# py-opencv
+
+
+# %% satır, sutun
+# satır: row, gozlem, ölçüm, record
+# sutun: column, değişken, feature, input, output
+
+# marka | model | kac_km | kazasi_var_mi | .. | fiyati
+# a     | b   ................................ | 100
+# a     | b   ..... 300  ....................... | 120
+
+# axis=0: columns (default)
+# axis=1: rows
+
+
+#%% kolonun tipi
+
+columns = df1.columns
+one_col = df1["yil"]
+
+
+# dict, list ...
+# ndarray
+# series
+# dataframe
+
+
+# %% yeni bir kolon eklemek.
+df1["puan"] = [8.2, 9.0, 8.4, 7.0, 8.0]
+
+# df1["puan"] = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]
+# Length of values does not match length of index
+
+df1["onayli"] = 1
+
+# %% .head(), .tail()
+
+# EDA
+# explatory deta analysis
+
+df1_head = df1.head()  # baştan 5 satir
+df1_head = df1.head(2)  # baştan 2 satir
+df1_tail = df1.tail()  # sondan 5 satir
+df1_tail = df1.tail(3)  # sondan 3 satir
+
+
+
+# %% describe()
+df_desc = df1.describe()
+
+# %% tekil elemana erişim.
+
+# df1[kolon_adi][index_adi] (index_adi==satir_Adi)
+cell1 = df1["puan"][2]  # 8.4
+# cell1 = df1["puan"]["the dark knight rises"]  # 8.4
+
+
+# %% .info()
+df1.info()
+
+
+
+# %% .unique()
+# unique: benzersiz, tekil.
+temp1 = df1["genre"].unique()
+# .mean(), .std(), .median(), .min(), max()
+
+# %% .value_counts()
+counts1 = df1["genre"].value_counts()
+counts2 = df1["genre"].value_counts(normalize=True)
+
+
+# %% birden fazla kolon secmek.
+df1_film_adi_ve_genre = df1[["film_adi", "genre"]]
+
+
+# %% kolonlarda ilerlemek.
+for column in df1:
+    print(column)
+
+print()
+
+for column in df1.columns:
+    print(column)
+
+# %% .iterrows() ile satırlarda ilerlemek
+
+for index, row in df1.iterrows():
+    # x, y = (3, 4)
+    print()
+    print(index, " | ", row["genre"])
+
+for x in df1.iterrows():
+    # x diye bir degiskenimiz olmasın :)
+    # x = (3, 4, 5)
+    index = x[0]
+    row = x[1]
+    print(x)
+
+
+# %% iterrows ile mantığı birlestirmek icin:
+for i in range(10):
+    print(i)
+
+r1 = range(0, 10, 1)
+print(r1)
+
+
+# %% .itertuples()
+# iterrows'dan daha hizlidir.
+for row in df1.itertuples():
+    print(row.genre)
+
+
+# %% .transpose
+# .T
+df2 = df1.T
+
+
+#%% .copy()
+df2 = df1.copy()
+
+# 100 x
+# 110 y
+# 120 z
+# 130 q
+
+# q = [1, 2, 3]
+# p1 = [2, 4, q]
+# p2 = p1[:]
+# [2, 4, q]
+
+# a1 = [1, 2, 3]  # 100
+# a2 = a1  # shallow copy
+# a2.append(4)
+# print(a1)  # 1, 2, 3, 4
+# print(a2)  # 1, 2, 3, 4
+
+# a1(94):100
+# a2(96):100
+
+# 100:1, 2, 3, 4
+
+
+# %% .values
+values_ndarray = df1.values
+
+
+
+# %% index isimlerini degistirmek
+df1.index = ["batman1", "batman2", "batman3", "aquaman", "terminator"]
+
+# puan1 = df1["aquaman"]  # KeyError
+#       df1[kolon_adi][index_adi]
+puan1 = df1["puan"]["aquaman"]  # 7.0
+
+puan_kolonu = df1["puan"]  # kolon adı veriyoruz.
+
+
+# %% .loc
+# location
+# burada, index adı (satır adi) veriyoruz.
+# o satırı alıyoruz.
+df_loc1 = df1.loc["batman2"]
+df_loc2 = df1.loc["batman2":"aquaman"]
+df_loc3 = df1.loc["batman2":"aquaman", "yil":"puan"]
+df_kesit = df1.loc[["batman1", "batman2", "batman3"], ["film_adi", "puan"]]
+
+
+# %% sorgu
+# == != <= >= < >
+# | & 
+df2 = df1[(df1["puan"] >= 8) & (df1["yil"] >= 2006)]
+
+# %% str
+# df3 = df1[df1["film_adi"].str.contains("ark")]
+df3 = df1[df1["film_adi"].str.contains("knight")]
+# https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.html
+
+
+# %% nan yönetimi
+import numpy as np
+import pandas as pd
+
+array1 = np.random.randint(1, 20, (10, 4))
+df_random = pd.DataFrame(array1)
+df_random2 = df_random[df_random > 3]
+# tüm df içinde, 3'den büyük olan elemanlar gelsin.
+# diğerleri? onlar nan olsun.
+
+# EDA
+df_random3 = df_random2.isnull().sum()
+
+
+# içinde nan olan satırlar haricindekileri getir.
+# df_random4 = df_random2.dropna(how="any")
+df_random4 = df_random2.dropna(how="all")
+
+
+# %%
+df = pd.DataFrame( 
+     [[1, 2, 3], 
+     [4, 6, 8],
+     [10, 11, 12]],
+     index=[1, 2, 3], 
+     columns=['a', 'b', 'c'])
+     
+     import pandas as pd
+data = pd.read_csv('file.csv')
+ 
+data = pd.read_csv("data.csv", index_col=0)
+     
