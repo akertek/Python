@@ -1,0 +1,15 @@
+- model: kitaplar.Yazar
+  pk: 1
+  fields:
+    adi: İlker Arslan
+    tc_kimlik_no: 111
+- model: kitaplar.Yazar
+  pk: 2
+  fields:
+    adi: MacMillan Inc.
+    tc_kimlik_no: 112
+- model: kitaplar.Yazar
+  pk: 3
+  fields:
+    adi: Isaac Asimov
+    tc_kimlik_no: 113
