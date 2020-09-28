@@ -1,0 +1,24 @@
+- model : kitaplar.Kitap
+  pk: 1
+  fields:
+    adi: Üç Robot Yasası
+    yili: 1996-01-01
+    notlar: Bu kitapta robotları çözeceksiniz.
+    yazar: 3
+
+- model : kitaplar.Kitap
+  pk: 2
+  fields:
+    adi: Python ile Veri Bilimi
+    yili: 2000-01-01
+    notlar: Veribilimi şov. Her şeyi öğrenin.
+    yazar: 1
+
+- model : kitaplar.Kitap
+  pk: 3
+  fields:
+    adi: MacMillan English Dict.
+    yili: 1950-01-01
+    notlar: english for advanced users.
+    yazar: 2
+
